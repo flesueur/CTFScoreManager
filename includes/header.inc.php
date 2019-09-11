@@ -119,7 +119,7 @@ if (!isAuth() || !isAdmin()) {
 echo <<< EOT
 	<html><head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="../css/pure-min.css">
+	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/fadeout.css">
 	<title>Zone ADMIN -
 EOT;
