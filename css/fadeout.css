@@ -1,0 +1,92 @@
+@-webkit-keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    16% {
+        opacity: 1;
+    }
+    84% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    16% {
+        opacity: 1;
+    }
+    84% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.message {
+    position: fixed;
+    top: 8px;
+    left: 30%;
+    background: green;
+    border-radius: 10px;
+    width: 400px;
+    margin: 0 auto;
+    opacity: 0;
+    text-align: center;
+    -webkit-animation: fadeInOut 4s;
+    animation: fadeInOut 4s;
+	z-index: 10;
+}
+
+
+form {
+	margin-bottom: 0;
+}
+
+        .button-xxsmall {
+            font-size: 50%;
+        }
+
+        .button-xsmall {
+            font-size: 70%;
+        }
+
+        .button-small {
+            font-size: 85%;
+        }
+
+        .button-large {
+            font-size: 110%;
+        }
+
+        .button-xlarge {
+            font-size: 125%;
+        }
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-green {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-maroon {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-orange {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-blue {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
