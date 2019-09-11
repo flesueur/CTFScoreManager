@@ -5,7 +5,7 @@ require_once("includes/printers.inc.php");
 
 require_once("includes/header.inc.php");
 
-print_header("RESSI CTF 2015");
+print_header("CTF");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == "create_report") {
 	if(createReport($_POST['service_id'], $_POST['details'], NULL, $_POST['previous_id'], $_POST['name'], $_POST['solution'])==1) {

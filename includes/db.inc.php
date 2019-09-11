@@ -2,7 +2,7 @@
 global $bdd;
 try
 {
-	$bdd = new PDO('mysql:host=localhost;dbname=ressictf;charset=utf8', 'ressictf', 'ressictf');
+	$bdd = new PDO('mysql:host=localhost;dbname=ctf;charset=utf8', 'ctf', 'ctf');
 }
 catch (Exception $e)
 {

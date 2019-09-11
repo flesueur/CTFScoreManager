@@ -8,7 +8,7 @@ session_set_cookie_params(36000);
 
 reqlog();
 
-function print_header($title="RESSI CTF 2015") {
+function print_header($title="CTF") {
 	header('Content-Type: text/html; charset=utf-8');
 echo <<< EOT
 	<html><head>
@@ -97,7 +97,7 @@ if (!isAuth()) {
 
 
 
-function print_admin_header($title="ADMIN RESSI CTF 2015") {
+function print_admin_header($title="ADMIN CTF") {
 	header('Content-Type: text/html; charset=utf-8');
 
 
@@ -155,8 +155,6 @@ function print_footer() {
 /*echo "<br/>";
 var_dump($_SESSION);*/
 echo <<< EOT
-<br/>
-En cas de problème : <a href="mailto:challenge.ressi2015@utt.fr">challenge.ressi2015@utt.fr</a>
 </div></body></html>
 EOT;
 }
