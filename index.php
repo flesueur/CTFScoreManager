@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == "create_report")
 	} else {
 		echo popup("Échec de création","red");
 	}
-} 
+}
 ?>
 
 <div class="splash-container">
     <div class="splash">
-<?
+<?php
 $formular = new Formular("index.php", "POST");
 $formular->addHidden("action", "create_report");
 if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == "update_report") {
@@ -44,7 +44,7 @@ print $formular;
 </div>
 
 <h2>Liste des rapports</h2>
-<?
+<?php
 $table = new Table();
 $table->setHeader(array("UID", "Service", "Nom", "Détails", "Correction", "Quick Grade", "Final Grade", "Soumis à", "Liée à", "Modifier"));
 $reponse = listMyReports();
@@ -87,6 +87,6 @@ print $table;
 
 
 
-<?
+<?php
 print_footer();
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 function prompt_login() {
 
 echo <<< EOT
@@ -50,4 +50,3 @@ echo <<< EOT
 EOT;
 }
 ?>
-

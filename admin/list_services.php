@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("../includes/db.inc.php");
 require_once("../includes/functions.inc.php");
 require_once("../includes/printers.inc.php");
@@ -75,7 +75,7 @@ print $table;
 
 <h2>Ajouter une vuln</h2>
 
-<?
+<?php
 $formular = new Formular("list_services.php", "POST");
 $formular->addHidden("action", "create_vuln");
 $formular->addText("service_name", "Nom", "Nom", NULL);

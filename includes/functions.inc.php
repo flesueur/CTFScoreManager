@@ -1,4 +1,4 @@
-<?
+<?php
 
 // TODO : tokens pour CSRF
 
@@ -9,7 +9,7 @@ function login($login, $pass) {
 $req->execute(array(
     'user_name' => $login,
     'password' => $pass
-    )); 
+    ));
 	if ($row = $req->fetch()) {
 		$_SESSION["isAuth"] = true;
 		$_SESSION["isAdmin"] = (bool)$row["is_admin"];
@@ -43,9 +43,9 @@ function popup($str,$color="green") {
 function reqlog() {
 	$bdd = $GLOBALS['bdd'];
 	//if ($user_id == NULL) $user_id = $_SESSION["auth_uid"];
-	if (empty($_GET) && empty($_POST) && strlen($_SERVER[REQUEST_URI]) < 40 ) return 1; 
-	$today = date("Y-m-d H:i:s"); 
-	$req = $bdd->prepare('INSERT INTO ctf_log(ip_src,user_id,is_auth,is_admin,php_session,get,post,URI) 
+	if (empty($_GET) && empty($_POST) && strlen($_SERVER[REQUEST_URI]) < 40 ) return 1;
+	$today = date("Y-m-d H:i:s");
+	$req = $bdd->prepare('INSERT INTO ctf_log(ip_src,user_id,is_auth,is_admin,php_session,get,post,URI)
 				VALUES(:ip_src,:user_id,:is_auth,:is_admin,:php_session,:get,:post,:URI)');
 $err = $req->execute(array(
     'ip_src' => $_SERVER['REMOTE_ADDR'],
@@ -56,7 +56,7 @@ $err = $req->execute(array(
     'get' => json_encode($_GET),
     'post' => json_encode($_POST),
     'URI' => json_encode($_SERVER[REQUEST_URI])
-    )); 
+    ));
 	return 1;
 }
 
@@ -124,7 +124,7 @@ function getServiceFromUid($uid) {
 	$req = $bdd->prepare('SELECT service_name,service_patch FROM ctf_services WHERE service_id = :service_id');
 	$req->execute(array(
     		'service_id' => $uid
-    	)); 
+    	));
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -136,9 +136,9 @@ function listReports() {
 	$reponse = $bdd->query('SELECT
  ctf_reports.report_id,ctf_reports.user_id,ctf_reports.service_id,ctf_reports.details,ctf_services.service_name,
 		ctf_users.user_name,ctf_reports.time_submitted, ctf_users.email,ctf_reports.previous_id,ctf_reports.name, 			ctf_reports.solution, ctf_reports.graded_by
- FROM ctf_reports 
-	INNER JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id) 
-	INNER JOIN ctf_users ON (ctf_reports.user_id=ctf_users.user_id) 
+ FROM ctf_reports
+	INNER JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id)
+	INNER JOIN ctf_users ON (ctf_reports.user_id=ctf_users.user_id)
   ORDER BY service_id,report_id');
 	$result = $reponse->fetchAll();
 	$reponse->closeCursor(); // Termine le traitement de la requête
@@ -151,9 +151,9 @@ function listUngradedReports() {
 	$reponse = $bdd->query('SELECT
  ctf_reports.report_id,ctf_reports.user_id,ctf_reports.service_id,ctf_reports.details,ctf_services.service_name,
 		ctf_users.user_name,ctf_reports.time_submitted, ctf_users.email,ctf_reports.previous_id,ctf_reports.name, 			ctf_reports.solution, ctf_reports.graded_by
- FROM ctf_reports 
-	LEFT JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id) 
-	INNER JOIN ctf_users ON (ctf_reports.user_id=ctf_users.user_id) 
+ FROM ctf_reports
+	LEFT JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id)
+	INNER JOIN ctf_users ON (ctf_reports.user_id=ctf_users.user_id)
 	WHERE quick_grade=-1
   ORDER BY service_id,report_id');
 	$result = $reponse->fetchAll();
@@ -167,11 +167,11 @@ function listGradedReports() {
 	$reponse = $bdd->query('SELECT
  ctf_reports.report_id,ctf_reports.user_id,ctf_reports.service_id,ctf_reports.details,ctf_services.service_name,
 		ctf_users.user_name,ctf_reports.time_submitted, quick_grade, final_grade, time_graded,
-		ctf_users.email,ctf_reports.previous_id,ctf_reports.name, 
+		ctf_users.email,ctf_reports.previous_id,ctf_reports.name,
 		ctf_reports.solution, ctf_reports.graded_by
- FROM ctf_reports 
-	LEFT JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id) 
-	INNER JOIN ctf_users ON (ctf_reports.user_id=ctf_users.user_id) 
+ FROM ctf_reports
+	LEFT JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id)
+	INNER JOIN ctf_users ON (ctf_reports.user_id=ctf_users.user_id)
 	WHERE quick_grade!=-1
   ORDER BY service_id,quick_grade,report_id');
 	$result = $reponse->fetchAll();
@@ -183,15 +183,15 @@ function listGradedReports() {
 function listMyReports() {
 	$bdd = $GLOBALS['bdd'];
 	$req = $bdd->prepare('SELECT
- ctf_reports.report_id,ctf_reports.user_id,ctf_reports.service_id,ctf_reports.details,ctf_reports.quick_grade, ctf_reports.final_grade,ctf_services.service_name, ctf_reports.previous_id, ctf_reports.time_submitted, 
+ ctf_reports.report_id,ctf_reports.user_id,ctf_reports.service_id,ctf_reports.details,ctf_reports.quick_grade, ctf_reports.final_grade,ctf_services.service_name, ctf_reports.previous_id, ctf_reports.time_submitted,
 	ctf_reports.name, ctf_reports.solution
- FROM ctf_reports 
-	LEFT JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id) 
+ FROM ctf_reports
+	LEFT JOIN ctf_services ON (ctf_reports.service_id=ctf_services.service_id)
   WHERE ctf_reports.user_id=:user
   ORDER BY service_id,report_id');
 	$req->execute(array(
     		'user' => $_SESSION["auth_uid"]
-    	)); 
+    	));
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -203,7 +203,7 @@ function getUserFromUid ($uid){
 	$req = $bdd->prepare('SELECT user_name FROM ctf_users WHERE user_id = :uid');
 	$req->execute(array(
     		'uid' => $uid
-    	)); 
+    	));
 	if ($row = $req->fetch()) {
 		return xssafe($row["user_name"]);
 	}
@@ -215,7 +215,7 @@ function getAccountFromUid($uid) {
 	$req = $bdd->prepare('SELECT user_id,user_name,email,password,is_admin,is_local FROM ctf_users WHERE user_id = :user_id');
 	$req->execute(array(
     		'user_id' => $uid
-    	)); 
+    	));
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -228,13 +228,13 @@ function getAccountFromUid($uid) {
 	FROM
 	(
 	SELECT MAX(quick_grade) as \'Max\'
-	 FROM ctf_reports 
+	 FROM ctf_reports
   	WHERE ctf_reports.user_id=:user
   	GROUP BY service_id
 	) as T');
 	$req->execute(array(
     		'user' => $user_id
-    	)); 
+    	));
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -244,7 +244,7 @@ function getAccountFromUid($uid) {
 function getRankings() {
 	$bdd = $GLOBALS['bdd'];
 	/*$req = $bdd->prepare('SELECT user_id, COALESCE(SUM(Max), 0) as score, user_name
-FROM 
+FROM
 (SELECT ctf_users.user_id, user_name, service_id, MAX(quick_grade) as Max
  FROM ctf_users
   LEFT JOIN ctf_reports ON (ctf_reports.user_id = ctf_users.user_id)
@@ -256,7 +256,7 @@ ORDER BY score DESC');*/
 FROM ctf_users
 INNER JOIN ctf_v_scores ON ctf_v_scores.user_id = ctf_users.user_id
 ORDER BY score DESC, user_name');
-	$req->execute(); 
+	$req->execute();
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -270,9 +270,9 @@ FROM ctf_services
 LEFT JOIN
 (
 SELECT service_id, COUNT(*) as nbquick
-FROM  
+FROM
 (
-SELECT ctf_reports.service_id, user_id 
+SELECT ctf_reports.service_id, user_id
 FROM ctf_reports
 WHERE quick_grade = 1
   GROUP BY service_id, user_id
@@ -280,7 +280,7 @@ WHERE quick_grade = 1
 GROUP BY service_id
 ) AS S
 ON S.service_id = ctf_services.service_id');
-	$req->execute(); 
+	$req->execute();
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -294,9 +294,9 @@ FROM ctf_services
 LEFT JOIN
 (
 SELECT service_id, COUNT(*) as nbpartial
-FROM  
+FROM
 (
-SELECT ctf_reports.service_id, user_id 
+SELECT ctf_reports.service_id, user_id
 FROM ctf_reports
 WHERE quick_grade = 1
   GROUP BY service_id, user_id) AS T
@@ -308,9 +308,9 @@ ON S.service_id = ctf_services.service_id
 LEFT JOIN
 (
 SELECT service_id, COUNT(*) as nbcomplete
-FROM  
+FROM
 (
-SELECT ctf_reports.service_id, user_id 
+SELECT ctf_reports.service_id, user_id
 FROM ctf_reports
 WHERE quick_grade = 2
   GROUP BY service_id, user_id) AS T2
@@ -324,7 +324,7 @@ WHERE ctf_services.service_id != -1
 FROM ctf_v_servicesstats
 WHERE service_id != -1
 ORDER BY service_id');
-	$req->execute(); 
+	$req->execute();
 	$result = $req->fetchAll();
 	$req->closeCursor(); // Termine le traitement de la requête
 	axssafe($result);
@@ -338,7 +338,7 @@ ORDER BY service_id');
 
 // Account mgmt
 function createAccount($user_name, $email, $password, $password2, $terms,
-			$part1_univ, $part1_cursus, $part1_firstname, $part1_lastname, $part1_email, 
+			$part1_univ, $part1_cursus, $part1_firstname, $part1_lastname, $part1_email,
 			$part2_univ, $part2_cursus, $part2_firstname, $part2_lastname, $part2_email,
 			$place) {
 	if ($terms != "on") return 0;
@@ -358,7 +358,7 @@ $err = $req->execute(array(
     'email' => filter_var($part1_email,FILTER_SANITIZE_EMAIL).";".filter_var($part2_email,FILTER_SANITIZE_EMAIL),
     'password' => $password,
     'place' => $isLocal
-    )); 
+    ));
 //filter_var($email,FILTER_SANITIZE_STRING),
 	$user_id = $bdd->lastInsertId();
 
@@ -372,7 +372,7 @@ $err = $req->execute(array(
     'firstname' => filter_var($part1_firstname,FILTER_SANITIZE_STRING),
     'lastname' => filter_var($part1_lastname,FILTER_SANITIZE_STRING),
     'email' => filter_var($part1_email,FILTER_SANITIZE_EMAIL)
-    )); 
+    ));
 
 	 $req->execute(array(
     'user_id' => $user_id,
@@ -391,7 +391,7 @@ function deleteAccount($user_id) {
 	$req = $bdd->prepare('DELETE FROM ctf_users WHERE user_id = :user_id');
 $err = $req->execute(array(
     'user_id' => $user_id
-    )); 
+    ));
 	return $err;
 }
 
@@ -406,7 +406,7 @@ $err = $req->execute(array(
     'is_local' => $isLocal,
 'is_admin' => $isAdmin,
 'user_id' => $user_id
-    )); 
+    ));
 	return $err;
 }
 
@@ -414,7 +414,7 @@ $err = $req->execute(array(
 function createReport($service_id, $details, $user_id, $previous_id, $name="", $solution="") {
 	$bdd = $GLOBALS['bdd'];
 	if ($user_id == NULL) $user_id = $_SESSION["auth_uid"];
-	$today = date("Y-m-d H:i:s"); 
+	$today = date("Y-m-d H:i:s");
 	$req = $bdd->prepare('INSERT INTO ctf_reports(user_id,service_id,details,time_submitted, previous_id, name, solution) VALUES(:user, :service, :details, :time, :previd, :name, :solution)');
 $err = $req->execute(array(
     'user' => $user_id,
@@ -424,13 +424,13 @@ $err = $req->execute(array(
     'previd' => $previous_id,
     'name' => $name,
     'solution' => $solution
-    )); 
+    ));
 	return $err;
 }
 
 function updateReport($report_id, $service_id, $quick_grade) {
 	$bdd = $GLOBALS['bdd'];
-	$today = date("Y-m-d H:i:s"); 
+	$today = date("Y-m-d H:i:s");
 	$req = $bdd->prepare('UPDATE ctf_reports SET service_id=:service_id,quick_grade=:quick_grade,time_graded=:time,graded_by=:graded_by WHERE report_id = :report_id');
 $err = $req->execute(array(
     'service_id' => $service_id,
@@ -438,7 +438,7 @@ $err = $req->execute(array(
     'report_id' => $report_id,
     'time' => $today,
     'graded_by' => $_SESSION["auth_uid"]
-    )); 
+    ));
 	return $err;
 }
 
@@ -450,7 +450,7 @@ function createVuln($service_name, $service_patch) {
 $err = $req->execute(array(
     'name' => $service_name,
     'patch' => $service_patch
-    )); 
+    ));
 	return $err;
 }
 
@@ -459,7 +459,7 @@ function deleteVuln($service_id) {
 	$req = $bdd->prepare('DELETE FROM ctf_services WHERE service_id = :id');
 $err = $req->execute(array(
     'id' => $service_id
-    )); 
+    ));
 	return $err;
 }
 
@@ -470,7 +470,7 @@ $err = $req->execute(array(
     'service_name' => $service_name,
     'service_patch' => $service_patch,
     'service_id' => $service_id
-    )); 
+    ));
 	return $err;
 }
 

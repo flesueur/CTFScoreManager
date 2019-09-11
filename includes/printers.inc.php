@@ -1,8 +1,8 @@
-<?
+<?php
 
 class Table {
 
-	private $header = array();    
+	private $header = array();
 	private $content = array();
 	private $labels = array();
 	private $colors = array();

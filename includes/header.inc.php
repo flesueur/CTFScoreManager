@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 // server should keep session data for AT LEAST 10 hours
 ini_set('session.gc_maxlifetime', 36000);
@@ -86,7 +86,7 @@ EOT;
 if (!isAuth()) {
 	require("login.inc.php");
 	prompt_login();
-	exit;	
+	exit;
 }
 
 
@@ -120,7 +120,7 @@ echo <<< EOT
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="../css/pure-min.css">
 	<link rel="stylesheet" href="../css/fadeout.css">
-	<title>Zone ADMIN - 
+	<title>Zone ADMIN -
 EOT;
 	print $title;
 echo <<< EOT

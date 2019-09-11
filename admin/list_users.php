@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("../includes/db.inc.php");
 require_once("../includes/functions.inc.php");
 require_once("../includes/printers.inc.php");
@@ -43,7 +43,7 @@ print $formular;
 ?>
 
 <h2>Liste des équipes</h2>
-<?
+<?php
 $table = new Table();
 $table->setHeader(array("UID", "Nom", "Email", "isAdmin", "isLocal", "Modifier", "Supprimer"));
 $reponse = listUsers();
@@ -71,7 +71,7 @@ print $table;
 ?>
 
 <h2>Liste des participants</h2>
-<?
+<?php
 $table = new Table();
 $table->setHeader(array("UID", "Équipe", "Nom", "Prénom", "Email", "Université", "Cursus"));
 $reponse = listPeople();

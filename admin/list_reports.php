@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("../includes/db.inc.php");
 require_once("../includes/functions.inc.php");
 require_once("../includes/printers.inc.php");
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == "quick_grade_rep
 <h2>Liste des rapports à évaluer</h2>
 
 
-<?
+<?php
 $table = new Table();
 $table->setHeader(array("UID", "Participant", "Service", "Nom", "Détails", "Correction", "Soumis à", "Quick Grade", "Final Grade", "Previous"));
 $reponse = listUngradedReports();
@@ -67,7 +67,7 @@ print $table;
 ?>
 
 <h2>Liste des rapports déjà évalués</h2>
-<?
+<?php
 $table = new Table();
 $table->setHeader(array("UID", "Participant", "Service", "Nom", "Détails", "Correction", "Soumis à", "Noté à", "Quick Grade", "Final Grade", "Previous"));
 $reponse = listGradedReports();
@@ -100,7 +100,7 @@ print $table;
 
 <h2>Ajouter un rapport</h2>
 
-<?
+<?php
 $reponse = listUsers();
 $users = array();
 foreach ($reponse as $value) {

@@ -1,4 +1,4 @@
-<?
+<?php
 global $bdd;
 try
 {
@@ -7,5 +7,5 @@ try
 catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
-} 
-?> 
+}
+?>
